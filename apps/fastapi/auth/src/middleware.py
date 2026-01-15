@@ -2,7 +2,6 @@ import inspect
 from datetime import datetime, timezone
 from json import JSONDecodeError, loads
 
-from libs.utils.audit.src.middleware import AuditMiddleware
 from starlette.concurrency import iterate_in_threadpool
 from starlette.middleware import Middleware
 from starlette.middleware.base import (
@@ -19,6 +18,7 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from apps.fastapi.auth.src.helpers import decode_jwt_token
 from libs.utils.common.custom_logger.src import CustomLogger
 from libs.utils.common.custom_logger.src.helper import extra_details_for_req
+from libs.utils.enums.src import TokenType
 
 log = CustomLogger("AppMiddleware")
 
@@ -63,7 +63,10 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             if auth:
                 parts = auth.split()
 
-                if len(parts) == 2 and parts[0].lower() == "bearer":
+                if (
+                    len(parts) == 2
+                    and parts[0].lower() == TokenType.Bearer.value.lower()
+                ):
                     token = parts[1]
 
             user_id = None
@@ -136,6 +139,5 @@ middlewares = [
         RawContextMiddleware,
         plugins=[plugins.RequestIdPlugin(force_new_uuid=True)],
     ),
-    Middleware(AuditMiddleware),  # Add audit middleware to capture client info
     Middleware(LoggingMiddleware),
 ]
