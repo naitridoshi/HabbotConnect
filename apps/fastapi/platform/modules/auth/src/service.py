@@ -41,6 +41,7 @@ def login_user(login_data: UserLogin):
 
     return success_response(
         data={
+            "id": str(user_authenticated.get("_id")),
             "access_token": access_token,
             "refresh_token": refresh_token,
             "token_type": TokenType.Bearer,
@@ -57,10 +58,11 @@ def signup_user(signup_data: UserRegisterDTO):
     if user_with_same_email_exists:
         raise ValueError("Email already exists")
 
-    users_operations.create_user(signup_data.email, signup_data.password)
+    created_id = users_operations.create_user(signup_data.email, signup_data.password)
 
     return success_response(
         data={
+            "id": str(created_id),
             "name": signup_data.name,
             "email": signup_data.email,
         },

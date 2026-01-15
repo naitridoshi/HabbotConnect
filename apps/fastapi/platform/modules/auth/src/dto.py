@@ -20,6 +20,7 @@ class UserRegisterDTO(BaseModel):
 
 
 class LoginDataDTO(BaseModel):
+    id: str
     access_token: str
     refresh_token: str
     token_type: TokenType
@@ -31,6 +32,7 @@ class LoginResponseDTO(BaseResponseDTO[LoginDataDTO]):
 
 
 class RegisterDataDTO(BaseModel):
+    id: str
     name: str = Field(...)
     email: EmailStr = Field(...)
 
