@@ -10,8 +10,7 @@ from apps.fastapi.platform.modules.auth.src.dto import (
     UserRegisterDTO,
 )
 from apps.fastapi.platform.modules.auth.src.service import (
-    login_user,
-    signup_user,
+    auth_service,
 )
 from libs.utils.common.custom_logger.src import CustomLogger
 
@@ -31,7 +30,7 @@ async def login(
 ):
     try:
         logger.info(f"Login attempt started for email {login_data.email}")
-        return login_user(login_data)
+        return auth_service.login_user(login_data)
 
     except ValueError as error:
         return JSONResponse(
@@ -56,7 +55,7 @@ async def signup(
 ):
     try:
         logger.info(f"Signup attempt started for email {signup_data.email}")
-        return signup_user(signup_data)
+        return auth_service.signup_user(signup_data)
 
     except ValueError as error:
         return JSONResponse(

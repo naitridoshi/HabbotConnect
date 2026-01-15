@@ -3,12 +3,10 @@ from libs.utils.db.mongodb.src.base_repository import BaseRepository
 
 # Collection references
 users_collection = db["users"]
-
+employees_collection = db["employees"]
 
 # Repository instances
 users_repository = BaseRepository(collection=users_collection, timestamps=True)
+employees_repository = BaseRepository(collection=employees_collection, timestamps=True)
 
-
-__all__ = [
-    "users_repository",
-]
+__all__ = ["users_repository", "employees_repository"]
