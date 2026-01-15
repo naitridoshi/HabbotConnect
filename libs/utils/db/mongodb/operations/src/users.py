@@ -41,7 +41,7 @@ class UsersOperations(BaseOperations):
                     "email": email,
                     "password": hashed_password,
                     "name": name,
-                    "is_active":True
+                    "is_active": True,
                 }
             )
             return user

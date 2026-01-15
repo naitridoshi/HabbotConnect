@@ -132,9 +132,7 @@ async def update_employee(
         )
 
 
-@employees_route.delete(
-    "/{employee_id}", status_code=status.HTTP_204_NO_CONTENT
-)
+@employees_route.delete("/{employee_id}", status_code=status.HTTP_204_NO_CONTENT)
 @log.track
 async def delete_employee(
     employee_id: str,
