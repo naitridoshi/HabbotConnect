@@ -27,17 +27,20 @@ class AuthService:
             login_data.email, login_data.password
         )
 
-        if user_authenticated:
+        if not user_authenticated:
             logger.warning("Login failed: Incorrect email or password")
             raise ValueError("Incorrect email or password")
 
+        token_data = login_data.model_dump()
+        token_data["user_id"] = str(user_authenticated.get("_id"))
+
         access_token = create_token(
-            data=login_data.model_dump(),
+            data=token_data,
             expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
         )
 
         refresh_token = create_token(
-            data=login_data.model_dump(),
+            data=token_data,
             expires_delta=timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS),
         )
 
@@ -59,6 +62,7 @@ class AuthService:
         user_with_same_email_exists = users_operations.get_user_by_email(
             signup_data.email
         )
+
         if user_with_same_email_exists:
             raise ValueError("Email already exists")
 

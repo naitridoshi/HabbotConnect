@@ -54,9 +54,12 @@ class EmployeesOperations(BaseOperations):
         )
 
     def update_employee(self, employee_id: str, employee_data: dict):
-        return self.repository.update_one(
+        updated = self.repository.update_one(
             {"_id": ObjectId(employee_id), "is_active": True}, {"$set": employee_data}
         )
+        if updated:
+            return self.find_by_id(employee_id)
+        return None
 
     def delete_employee(self, employee_id: str):
         return self.repository.update_one(

@@ -54,7 +54,7 @@ def require_user(credentials: HTTPAuthorizationCredentials = Security(auth_schem
         logger.warning(f"Inactive account for user_id: {user_id}")
         raise HTTPException(status_code=403, detail="Inactive account")
 
-    logger.info(f"User authenticated successfully: {user_id} - role: {user.role.value}")
+    logger.info(f"User authenticated successfully: {user_id}")
     return user
 
 

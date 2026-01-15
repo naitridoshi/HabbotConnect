@@ -162,9 +162,10 @@ class DynamicFileHandler(RotatingFileHandler):
     def __init__(self, *args, **kwargs):
         self.base_directory = os.path.join(BASE_DIR, "logs")
         os.makedirs(self.base_directory, exist_ok=True)
+        log_filename = f"history.{os.getpid()}.log"
         # Initialize with a default file
         super().__init__(
-            os.path.join(self.base_directory, "history.log"), *args, **kwargs
+            os.path.join(self.base_directory, log_filename), *args, **kwargs
         )
 
 

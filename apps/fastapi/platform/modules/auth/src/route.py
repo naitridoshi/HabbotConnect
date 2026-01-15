@@ -7,6 +7,7 @@ from starlette.responses import JSONResponse
 
 from apps.fastapi.platform.modules.auth.src.dto import (
     LoginResponseDTO,
+    RegisterResponseDTO,
     UserLoginDTO,
     UserRegisterDTO,
 )
@@ -50,7 +51,7 @@ async def login(
 
 
 @auth_route.post(
-    "/signup", response_model=LoginResponseDTO, status_code=status.HTTP_201_CREATED
+    "/signup", response_model=RegisterResponseDTO, status_code=status.HTTP_201_CREATED
 )
 @log.track
 async def signup(

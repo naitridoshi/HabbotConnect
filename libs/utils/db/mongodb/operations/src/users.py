@@ -36,11 +36,12 @@ class UsersOperations(BaseOperations):
     def create_user(self, name: str, email: str, password: str):
         try:
             hashed_password = get_password_hash(password)
-            user = self._repository.insert_one(
+            user = self.create(
                 {
                     "email": email,
                     "password": hashed_password,
                     "name": name,
+                    "is_active":True
                 }
             )
             return user

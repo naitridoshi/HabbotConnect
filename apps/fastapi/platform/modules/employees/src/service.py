@@ -29,7 +29,7 @@ class EmployeeService:
         employee_id = employees_operations.create_employee(employee_data.model_dump())
 
         return success_response(
-            data=format_employee_record(employee_data, employee_id),
+            data=format_employee_record(employee_data.model_dump(), employee_id),
             message="Employee created successfully",
         )
 
@@ -76,7 +76,7 @@ class EmployeeService:
             raise ValueError("Error occurred in updating employee")
 
         return success_response(
-            data=format_employee_record(employee, employee_id),
+            data=format_employee_record(employee_updated, employee_id),
             message="Employee updated successfully",
         )
 
@@ -89,6 +89,6 @@ class EmployeeService:
             raise ValueError("Employee not found")
 
         employees_operations.delete_employee(employee_id)
-
+        return None
 
 employee_service = EmployeeService()

@@ -2,7 +2,7 @@ import os
 
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from requests import Request
 from starlette.responses import RedirectResponse
 
@@ -38,12 +38,13 @@ app = FastAPI(
 async def not_found_handler(_: Request, _exc):
     return RedirectResponse(url="/health")
 
+api_router = APIRouter(prefix="/api")
+api_router.include_router(core_route)
+api_router.include_router(auth_route)
+api_router.include_router(employees_route)
 
-app.include_router(core_route)
-app.include_router(auth_route)
-app.include_router(employees_route)
 
-
+app.include_router(api_router)
 def start_server(
     host: str,
     port: int,

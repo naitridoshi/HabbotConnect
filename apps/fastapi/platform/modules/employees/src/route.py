@@ -21,7 +21,7 @@ employees_route = APIRouter(prefix="/employees", tags=["Employees"])
 
 
 @employees_route.post(
-    "/employees",
+    "/",
     response_model=EmployeeResponseDTO,
     status_code=status.HTTP_201_CREATED,
 )
@@ -51,7 +51,7 @@ async def create_employee(
         )
 
 
-@employees_route.get("/employees", response_model=EmployeesListResponseDTO)
+@employees_route.get("/", response_model=EmployeesListResponseDTO)
 @log.track
 async def get_employees(
     current_user=Depends(require_user),
@@ -79,7 +79,7 @@ async def get_employees(
         )
 
 
-@employees_route.get("/employees/{employee_id}", response_model=EmployeeResponseDTO)
+@employees_route.get("/{employee_id}", response_model=EmployeeResponseDTO)
 @log.track
 async def get_employee(
     employee_id: str,
@@ -104,7 +104,7 @@ async def get_employee(
         )
 
 
-@employees_route.put("/employees/{employee_id}", response_model=EmployeeResponseDTO)
+@employees_route.put("/{employee_id}", response_model=EmployeeResponseDTO)
 @log.track
 async def update_employee(
     employee_id: str,
@@ -133,7 +133,7 @@ async def update_employee(
 
 
 @employees_route.delete(
-    "/employees/{employee_id}", status_code=status.HTTP_204_NO_CONTENT
+    "/{employee_id}", status_code=status.HTTP_204_NO_CONTENT
 )
 @log.track
 async def delete_employee(

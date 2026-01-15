@@ -96,7 +96,10 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             else:
                 response_body = [chunk async for chunk in response.body_iterator]
                 response.body_iterator = iterate_in_threadpool(iter(response_body))
-                response_body = response_body[0].decode()
+                if response_body:
+                    response_body = response_body[0].decode()
+                else:
+                    response_body = ""
 
                 extra = extra_details_for_req(
                     inspect,

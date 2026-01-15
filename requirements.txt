@@ -19,9 +19,9 @@ python-jose
 passlib[bcrypt]
 black
 isort
-bcrypt
 python-multipart
 ruff
 pre-commit
 python-dateutil
 pydantic[email]
+pymsteams
