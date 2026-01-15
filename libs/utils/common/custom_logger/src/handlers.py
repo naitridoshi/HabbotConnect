@@ -6,8 +6,6 @@ from datetime import datetime, timezone
 from logging.handlers import RotatingFileHandler
 from time import sleep
 
-import boto3
-import watchtower
 from pymsteams import connectorcard
 from starlette.responses import JSONResponse
 from starlette_context import context
@@ -21,12 +19,6 @@ from libs.utils.common.custom_logger.src.enums import LogType
 from libs.utils.common.date_time.src import get_current_utc_timestamp
 from libs.utils.common.os_helpers.src import BASE_DIR, get_relative_path
 from libs.utils.config.src.logger import (
-    AWS_ACCESS_KEY_ID,
-    AWS_CLOUDWATCH_ENABLED,
-    AWS_CLOUDWATCH_REGION,
-    AWS_SECRET_ACCESS_KEY,
-    LOG_GROUP_NAME,
-    LOG_STREAM_NAME,
     MS_TEAMS_MESSAGE_RETRY_TIMEOUT_IN_SECONDS,
     MS_TEAMS_MESSAGE_SEND_RETRIES,
     MS_TEAMS_WEBHOOK_ENABLED,
@@ -241,32 +233,6 @@ dynamic_file_handler = DynamicFileHandler(
 json_formatter = CustomJsonFormatter()
 dynamic_file_handler.setFormatter(json_formatter)
 
-
-def get_cloudwatch_handler(log_stream_name: str = None):
-    """Create a CloudWatch handler with the specified log stream name."""
-    if not AWS_CLOUDWATCH_ENABLED:
-        return None
-
-    boto3_client = boto3.client(
-        "logs",
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-        region_name=AWS_CLOUDWATCH_REGION,
-    )
-
-    stream_name = log_stream_name or LOG_STREAM_NAME
-    return watchtower.CloudWatchLogHandler(
-        boto3_client=boto3_client,
-        log_group=LOG_GROUP_NAME,
-        log_stream_name=stream_name,
-        use_queues=False,
-    )
-
-
-if AWS_CLOUDWATCH_ENABLED:
-    aws_cloudwatch_handler = get_cloudwatch_handler()
-else:
-    aws_cloudwatch_handler = None
 
 if MS_TEAMS_WEBHOOK_ENABLED:
     teams_handler = TeamsHandler()

@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi.security import (
     HTTPBearer,
 )
+from starlette import status
 from starlette.responses import JSONResponse
 
 from apps.fastapi.platform.modules.auth.src.dto import (
@@ -48,7 +49,9 @@ async def login(
         )
 
 
-@auth_route.post("/signup", response_model=LoginResponseDTO)
+@auth_route.post(
+    "/signup", response_model=LoginResponseDTO, status_code=status.HTTP_201_CREATED
+)
 @log.track
 async def signup(
     signup_data: UserRegisterDTO,

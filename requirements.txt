@@ -23,4 +23,5 @@ bcrypt
 python-multipart
 ruff
 pre-commit
+python-dateutil
 pydantic[email]

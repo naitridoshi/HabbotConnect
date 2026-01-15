@@ -63,7 +63,7 @@ class AuthService:
             raise ValueError("Email already exists")
 
         created_id = users_operations.create_user(
-            signup_data.email, signup_data.password
+            signup_data.name, signup_data.email, signup_data.password
         )
 
         return success_response(

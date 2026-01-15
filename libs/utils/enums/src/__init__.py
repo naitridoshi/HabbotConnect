@@ -5,13 +5,13 @@ class TokenType(Enum):
     Bearer = "Bearer"
 
 
-class DepartmentType(Enum):
+class DepartmentType(str, Enum):
     HR = "HR"
     SALES = "SALES"
     ENGINEERING = "ENGINEERING"
 
 
-class RoleType(Enum):
+class RoleType(str, Enum):
     MANAGER = "MANAGER"
     DEVELOPER = "DEVELOPER"
     ANALYST = "ANALYST"

@@ -1,23 +1,4 @@
 from libs.utils.config.src import config
-from libs.utils.config.src.aws import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-
-AWS_CLOUDWATCH_ENABLED = str(config.get("AWS_CLOUDWATCH_ENABLED", "false")).lower()
-AWS_CLOUDWATCH_ENABLED = AWS_CLOUDWATCH_ENABLED in ("true", "1", "yes")
-AWS_CLOUDWATCH_REGION = config.get("AWS_CLOUDWATCH_REGION")
-
-LOG_GROUP_NAME = config.get("LOG_GROUP_NAME")
-LOG_STREAM_NAME = config.get("LOG_STREAM_NAME")
-LOG_STREAM_NAME_SCHEDULER = config.get(
-    "LOG_STREAM_NAME_SCHEDULER", f"{LOG_STREAM_NAME}-scheduler"
-)
-LOG_STREAM_NAME_CASE_PROCESSING = config.get("LOG_STREAM_NAME_CASE_PROCESSING")
-LOG_STREAM_NAME_FUND_ALLOCATION_RETRY = config.get(
-    "LOG_STREAM_NAME_FUND_ALLOCATION_RETRY"
-)
-LOG_STREAM_NAME_FUND_ALLOCATION = config.get("LOG_STREAM_NAME_FUND_ALLOCATION")
-LOG_STREAM_NAME_PAYMENT_REMINDER = config.get("LOG_STREAM_NAME_PAYMENT_REMINDER")
-LOG_STREAM_NAME_TRANSACTION_TASKS = config.get("LOG_STREAM_NAME_TRANSACTION_TASKS")
-LOG_STREAM_NAME_SMART_SEND_EXPIRY = config.get("LOG_STREAM_NAME_SMART_SEND_EXPIRY")
 
 MS_TEAMS_WEBHOOK_ENABLED = str(config.get("MS_TEAMS_WEBHOOK_ENABLED", "false")).lower()
 MS_TEAMS_WEBHOOK_ENABLED = MS_TEAMS_WEBHOOK_ENABLED in ("true", "1", "yes")
@@ -35,19 +16,6 @@ MS_TEAMS_CRITICAL_ALERTS_WEBHOOK_URL = config.get(
     "MS_TEAMS_CRITICAL_ALERTS_WEBHOOK_URL"
 )
 
-if AWS_CLOUDWATCH_ENABLED:
-    required = {
-        "AWS_ACCESS_KEY_ID": AWS_ACCESS_KEY_ID,
-        "AWS_SECRET_ACCESS_KEY": AWS_SECRET_ACCESS_KEY,
-        "AWS_CLOUDWATCH_REGION": AWS_CLOUDWATCH_REGION,
-        "LOG_GROUP_NAME": LOG_GROUP_NAME,
-        "LOG_STREAM_NAME": LOG_STREAM_NAME,
-    }
-    missing = [name for name, val in required.items() if not val]
-    if missing:
-        raise ValueError(
-            f"CloudWatch is enabled but missing required config value(s): {', '.join(missing)}"
-        )
 
 if MS_TEAMS_WEBHOOK_ENABLED:
     required = {

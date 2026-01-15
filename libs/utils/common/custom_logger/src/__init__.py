@@ -14,7 +14,6 @@ from libs.utils.common.custom_logger.src.handlers import (
     RequestDetailsFilter,
     console_handler,
     dynamic_file_handler,
-    get_cloudwatch_handler,
     teams_handler,
 )
 from libs.utils.common.custom_logger.src.helper import (
@@ -31,7 +30,6 @@ from libs.utils.common.date_time.src import (
     get_execution_time_in_seconds,
 )
 from libs.utils.config.src.logger import (
-    AWS_CLOUDWATCH_ENABLED,
     MS_TEAMS_WEBHOOK_ENABLED,
 )
 
@@ -72,11 +70,6 @@ class CustomLogger:
         _handlers = []
         _handlers.append(console_handler) if enable_console_handler else None
         _handlers.append(dynamic_file_handler) if enable_files_handler else None
-
-        # Use custom CloudWatch handler if log_stream_name is provided
-        if AWS_CLOUDWATCH_ENABLED:
-            custom_cw_handler = get_cloudwatch_handler(self.log_stream_name)
-            _handlers.append(custom_cw_handler)
 
         _handlers.append(teams_handler) if MS_TEAMS_WEBHOOK_ENABLED else None
 

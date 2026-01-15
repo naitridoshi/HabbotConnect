@@ -7,7 +7,9 @@ from requests import Request
 from starlette.responses import RedirectResponse
 
 from apps.fastapi.auth.src import middlewares
+from apps.fastapi.platform.modules.auth.src import auth_route
 from apps.fastapi.platform.modules.core.src import core_route
+from apps.fastapi.platform.modules.employees.src import employees_route
 from libs.utils.common.custom_logger.src import (
     Colors,
     CustomLogger,
@@ -38,6 +40,8 @@ async def not_found_handler(_: Request, _exc):
 
 
 app.include_router(core_route)
+app.include_router(auth_route)
+app.include_router(employees_route)
 
 
 def start_server(
@@ -46,9 +50,9 @@ def start_server(
     reload: bool = True,
     workers: int = 8,
     threads: int = 10,
-    environment: str = "local",
+    environment: str = "development",
 ):
-    if environment == "local":
+    if environment == "development":
         logger.info(
             color_string(
                 f"Starting server on http://{host}:{port}/docs with "

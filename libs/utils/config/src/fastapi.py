@@ -3,7 +3,7 @@ from libs.utils.config.src import config
 FASTAPI_APP_ENVIRONMENT = config.get("FASTAPI_APP_ENVIRONMENT", "development")
 
 FASTAPI_APP_HOST = config.get("FASTAPI_APP_HOST", "0.0.0.0")
-FASTAPI_APP_PORT = int(config.get("FASTAPI_APP_PORT", 9999))
+FASTAPI_APP_PORT = int(config.get("FASTAPI_APP_PORT", 5000))
 
 FASTAPI_APP_WORKERS = int(config.get("FASTAPI_APP_WORKERS", 2))
 FASTAPI_APP_THREADS = int(config.get("FASTAPI_APP_THREADS", 2))

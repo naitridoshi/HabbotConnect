@@ -33,7 +33,7 @@ class UsersOperations(BaseOperations):
     def get_user_by_id(self, user_id: str):
         return self.find_by_id(user_id)
 
-    def create_user(self, name, email, password):
+    def create_user(self, name: str, email: str, password: str):
         try:
             hashed_password = get_password_hash(password)
             user = self._repository.insert_one(

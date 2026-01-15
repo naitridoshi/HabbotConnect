@@ -16,6 +16,13 @@ class CreateEmployeeDTO(BaseModel):
     role: RoleType
 
 
+class UpdateEmployeeDTO(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
+    department: DepartmentType | None = None
+    role: RoleType | None = None
+
+
 class EmployeeDataDTO(CreateEmployeeDTO):
     id: str
     date_joined: datetime

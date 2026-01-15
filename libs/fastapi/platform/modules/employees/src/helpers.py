@@ -9,7 +9,17 @@ def format_employee_record(employee_data, employee_id):
     }
 
 
-def format_employee_list_record(employee_list):
+def format_employee_list_record(employee_list, total, page, page_size):
     employees = []
+
+    total_pages = (total + page_size - 1) // page_size if page_size > 0 else 0
     for employee in employee_list:
         employees.append(format_employee_record(employee, employee.get))
+
+    return {
+        "total": total,
+        "items": employees,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": total_pages,
+    }
