@@ -29,6 +29,7 @@ employees_route = APIRouter(prefix="/employees", tags=["Employees"])
 async def create_employee(
     employee_data: CreateEmployeeDTO, current_user=Depends(require_user)
 ):
+    """Create a new employee record."""
     try:
         logger.info(f"Employee creation request by : {current_user.get('email')}")
         return employee_service.create_employee(employee_data)
@@ -60,6 +61,7 @@ async def get_employees(
     page: int = Query(1, ge=1, description="Page number"),
     page_size: int = Query(10, ge=1, le=100, description="Items per page"),
 ):
+    """List employees with optional filters and pagination."""
     try:
         logger.info(f"Employee list request by : {current_user.get('email')}")
         return employee_service.list_employees(department, role, page, page_size)
@@ -85,6 +87,7 @@ async def get_employee(
     employee_id: str,
     current_user=Depends(require_user),
 ):
+    """Fetch a single employee by ID."""
     try:
         logger.info(f"Employee fetch request by : {current_user.get('email')}")
         return employee_service.get_employee(employee_id)
@@ -111,6 +114,7 @@ async def update_employee(
     updated_data: UpdateEmployeeDTO,
     current_user=Depends(require_user),
 ):
+    """Update an existing employee by ID."""
     try:
         logger.info(f"Employee update request by : {current_user.get('email')}")
         return employee_service.update_employee(
@@ -138,6 +142,7 @@ async def delete_employee(
     employee_id: str,
     current_user=Depends(require_user),
 ):
+    """Delete an employee by ID."""
     try:
         logger.info(f"Employee delete request by : {current_user.get('email')}")
         return employee_service.delete_employee(employee_id)

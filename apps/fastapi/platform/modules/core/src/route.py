@@ -20,11 +20,13 @@ start_time = get_current_utc_timestamp()
 
 @core_route.get("/")
 def redirect_to_health():
+    """Redirect root requests to the health endpoint."""
     return RedirectResponse(url="/health")
 
 
 @core_route.get("/health")
 def root():
+    """Return backend health status and uptime."""
     logger.info("Backend app health endpoint accessed")
     return JSONResponse(
         status_code=200,

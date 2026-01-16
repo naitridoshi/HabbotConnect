@@ -30,6 +30,7 @@ auth_route = APIRouter(prefix="/auth", tags=["Auth"])
 async def login(
     login_data: UserLoginDTO,
 ):
+    """Authenticate a user and return access tokens."""
     try:
         logger.info(f"Login attempt started for email {login_data.email}")
         return auth_service.login_user(login_data)
@@ -57,6 +58,7 @@ async def login(
 async def signup(
     signup_data: UserRegisterDTO,
 ):
+    """Register a new user account."""
     try:
         logger.info(f"Signup attempt started for email {signup_data.email}")
         return auth_service.signup_user(signup_data)
