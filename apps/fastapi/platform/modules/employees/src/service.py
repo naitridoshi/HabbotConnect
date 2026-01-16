@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from apps.fastapi.platform.modules.employees.src.dto import CreateEmployeeDTO
 from libs.fastapi.platform.modules.employees.src import format_employee_record
 from libs.fastapi.platform.modules.employees.src.helpers import (
@@ -26,10 +28,12 @@ class EmployeeService:
         if existing_employee:
             raise ValueError("Employee with email already exists")
 
-        employee_id = employees_operations.create_employee(employee_data.model_dump())
+        employee_dict = employee_data.model_dump()
+        employee_dict["date_joined"] = datetime.now(timezone.utc)
+        employee_id = employees_operations.create_employee(employee_dict)
 
         return success_response(
-            data=format_employee_record(employee_data.model_dump(), employee_id),
+            data=format_employee_record(employee_dict, employee_id),
             message="Employee created successfully",
         )
 

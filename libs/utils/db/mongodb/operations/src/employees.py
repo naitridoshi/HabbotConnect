@@ -24,9 +24,9 @@ class EmployeesOperations(BaseOperations):
 
     def create_employee(self, employee_data: dict):
         employee_data.update(
-            {"is_active": True, "date_joined": datetime.now(timezone.utc)}
+            {"is_active": True}
         )
-        return self.repository.insert_one(employee_data)
+        return self.create(employee_data)
 
     def list_employees(
         self, department: DepartmentType, role: RoleType, page: int, page_size: int
