@@ -85,7 +85,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
 
         try:
             response = await call_next(request)
-            if "text/event-stream" in response.headers["content-type"]:
+            content_type = response.headers.get("content-type", "")
+            if "text/event-stream" in content_type:
                 response.body_iterator = logging_iterator(
                     response=response,
                     iterator=response.body_iterator,

@@ -228,11 +228,14 @@ console_handler = logging.StreamHandler(sys.stdout)
 console_handler.setLevel(logging.DEBUG)
 console_handler.setFormatter(console_format)
 
-dynamic_file_handler = DynamicFileHandler(
-    maxBytes=1 * 1024 * 50, backupCount=10, encoding="utf-8"
-)
 json_formatter = CustomJsonFormatter()
-dynamic_file_handler.setFormatter(json_formatter)
+try:
+    dynamic_file_handler = DynamicFileHandler(
+        maxBytes=1 * 1024 * 50, backupCount=10, encoding="utf-8"
+    )
+    dynamic_file_handler.setFormatter(json_formatter)
+except OSError:
+    dynamic_file_handler = logging.NullHandler()
 
 
 if MS_TEAMS_WEBHOOK_ENABLED:
